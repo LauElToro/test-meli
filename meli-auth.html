@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Login con Mercado Libre (PKCE)</title>
+  <meta charset="UTF-8">
+  <title>Login Mercado Libre PKCE</title>
 </head>
 <body>
-  <h1>Autenticarse con Mercado Libre</h1>
+  <h1>Autenticación con Mercado Libre (PKCE)</h1>
   <button onclick="startAuth()">Iniciar autenticación</button>
   <pre id="info"></pre>
 
@@ -30,15 +30,20 @@
         .map(x => ('0' + x.toString(16)).slice(-2)).join('');
       const challenge = await sha256(verifier);
       localStorage.setItem('meli_code_verifier', verifier);
-      console.log("code_verifier (guárdalo si querés usar curl):", verifier);
+      console.log("code_verifier (guardalo si vas a usar curl):", verifier);
 
-      const url = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&code_challenge=${challenge}&code_challenge_method=S256`;
-      window.location.href = url;
+      const authUrl = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&code_challenge=${challenge}&code_challenge_method=S256`;
+      window.location.href = authUrl;
     }
 
-    async function exchangeToken(code) {
+    async function exchangeCodeForToken(code) {
       const verifier = localStorage.getItem('meli_code_verifier');
-      const body = new URLSearchParams({
+      if (!verifier) {
+        document.getElementById("info").innerText = "❌ No hay code_verifier en localStorage.";
+        return;
+      }
+
+      const params = new URLSearchParams({
         grant_type: 'authorization_code',
         client_id: clientId,
         code,
@@ -49,17 +54,17 @@
       const res = await fetch('https://api.mercadolibre.com/oauth/token', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body
+        body: params
       });
 
       const data = await res.json();
-      document.getElementById('info').textContent = JSON.stringify(data, null, 2);
+      document.getElementById("info").textContent = JSON.stringify(data, null, 2);
       console.log("Access Token:", data.access_token);
     }
 
-    const code = new URLSearchParams(window.location.search).get('code');
-    if (code) {
-      exchangeToken(code);
+    const urlCode = new URLSearchParams(window.location.search).get("code");
+    if (urlCode) {
+      exchangeCodeForToken(urlCode);
     }
   </script>
 </body>
