@@ -1,0 +1,106 @@
+@use './variables' as *;
+.mb-body-result {
+  min-width: 750px;
+
+  & .breadcrumb {
+    margin: 16px 0 16px 0;
+    font-size: 14px;
+    color: #999999;
+  }
+}
+
+.mb-card {
+  border-radius: 0;
+  border: none;
+
+  & .card-img {
+    border-radius: 4px;
+    width: auto;
+  }
+
+  & .card-icon {
+    padding-top: 24px;
+    padding-right: 24px;
+    padding-left: 24px;
+    display: grid;
+    place-items: center;
+    max-height: 96px;
+  }
+
+  & .card-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+    font-weight: bold;
+  }
+
+  & .card-body {
+    margin: 16px 16px 0px 16px;
+    padding: 0;
+    color: #424242;
+    border: 1px;
+    border-bottom-style: inset;
+  }
+
+  & .card-footer {
+    padding: 0px 24px 24px 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background: white;
+  }
+
+  &.hover:hover {
+    cursor: pointer;
+    background: #204d99;
+    color: white;
+    transition: all 0.3s ease-out;
+    transform: translate(0px, -10px);
+  }
+
+  &.hover:hover .card-title,
+  &.hover:hover .card-text {
+    color: white;
+  }
+
+  & .card-img-sale {
+    margin: 0 16px 0 0;
+    width: 180px;
+    height: 180px;
+    cursor: pointer;
+  }
+
+  & .card-img-shipping {
+    margin-left: 10px;
+    width: 18px;
+    height: 18px;
+  }
+
+  & .card-text {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  & .card-text-price {
+    margin-bottom: 32px;
+    font-size: 24px;
+    color: #333333;
+  }
+
+  & .card-text-name {
+    font-size: 18px;
+    color: #666666;
+    cursor: pointer;
+  }
+
+  & .card-text-state {
+    text-align: center;
+    font-size: 12px;
+    padding-top: 10px;
+    color: #999999;
+  }
+
+  & .card-body-row {
+    margin-bottom: 16px;
+  }
+}

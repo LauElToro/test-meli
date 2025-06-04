@@ -1,0 +1,11 @@
+@use './variables' as *;
+
+.breadcrumb {
+  font-size: 14px;
+  color: $text-color;
+  margin-bottom: 20px;
+
+  span {
+    margin-right: 5px;
+  }
+}

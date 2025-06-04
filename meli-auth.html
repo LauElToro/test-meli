@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mercado Libre PKCE Auth</title>
+</head>
+<body>
+  <h1>Autenticación Mercado Libre (PKCE)</h1>
+  <button onclick="startAuth()">Iniciar autenticación</button>
+  <p id="info"></p>
+  <script>
+    const clientId = '7427123709053353';
+    const redirectUri = 'https://meli-test-frontend.netlify.app';
+
+    function base64URLEncode(str) {
+      return btoa(String.fromCharCode.apply(null, new Uint8Array(str)))
+        .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    }
+
+    async function sha256(plain) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(plain);
+      const hash = await crypto.subtle.digest('SHA-256', data);
+      return base64URLEncode(hash);
+    }
+
+    async function startAuth() {
+      const codeVerifier = [...crypto.getRandomValues(new Uint8Array(64))]
+        .map(x => ('0' + x.toString(16)).slice(-2)).join('');
+
+      const codeChallenge = await sha256(codeVerifier);
+      localStorage.setItem('meli_code_verifier', codeVerifier);
+
+      const authUrl = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
+
+      document.getElementById("info").innerText = "Redirigiendo...";
+      window.location.href = authUrl;
+    }
+  </script>
+</body>
+</html>

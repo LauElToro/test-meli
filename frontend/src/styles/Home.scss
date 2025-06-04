@@ -1,0 +1,13 @@
+@use './variables' as *;
+.home {
+  text-align: center;
+
+  &__title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  &__text {
+    color: $text-color;
+  }
+}

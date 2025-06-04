@@ -1,0 +1,16 @@
+@use './variables' as *;
+
+header {
+  background-color: $primary-color;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+
+  .search-box {
+    margin: 0 auto;
+  }
+}
+
+main {
+  padding: 20px;
+}

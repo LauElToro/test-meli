@@ -1,0 +1,40 @@
+@use './variables' as *;
+.item-card {
+  display: flex;
+  background-color: $bg-light;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+
+  img {
+    width: 120px;
+    height: auto;
+    object-fit: contain;
+    margin-right: 15px;
+  }
+
+  &__info {
+    flex: 1;
+  }
+
+  &__price {
+    font-size: 1.4rem;
+    color: $dark-color;
+    margin: 0;
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    margin: 5px 0;
+  }
+
+  &__shipping {
+    color: green;
+    font-weight: bold;
+  }
+}
