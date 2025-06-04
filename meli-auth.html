@@ -10,7 +10,7 @@
   <pre id="info"></pre>
 
   <script>
-    const clientId = 'TU_CLIENT_ID'; // ← Reemplazar con tu client_id real
+    const clientId = '7427123709053353';
     const redirectUri = 'https://meli-test-frontend.netlify.app';
 
     function base64URLEncode(str) {
@@ -30,6 +30,7 @@
         .map(x => ('0' + x.toString(16)).slice(-2)).join('');
       const challenge = await sha256(verifier);
       localStorage.setItem('meli_code_verifier', verifier);
+      console.log("code_verifier (guárdalo si querés usar curl):", verifier);
 
       const url = `https://auth.mercadolibre.com.ar/authorization?response_type=code&client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&code_challenge=${challenge}&code_challenge_method=S256`;
       window.location.href = url;
