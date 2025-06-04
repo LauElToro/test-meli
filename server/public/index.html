@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mercado Libre Auth</title>
+</head>
+<body>
+  <h1>Autenticando con Mercado Libre...</h1>
+  <script>
+    // Extraer el code de la URL
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+
+    if (code) {
+      fetch(`https://local.meli.test/auth/callback?code=${code}`)
+        .then(res => res.text())
+        .then(data => {
+          document.body.innerHTML = `<h2>✅ Autenticado correctamente</h2><p>${data}</p>`;
+        })
+        .catch(err => {
+          console.error(err);
+          document.body.innerHTML = `<h2>❌ Error al autenticar</h2><pre>${err}</pre>`;
+        });
+    } else {
+      document.body.innerHTML = "<h2>No se encontró el código de autenticación.</h2>";
+    }
+  </script>
+</body>
+</html>
